@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum State{CheckArrow,CheckPower,Play,Wait};
+    public enum PState{CheckArrow,CheckPower,Play,Wait};
+    public enum GState{PlayerTurn,EnemyTurn};
+    public enum EState{Attack,Wait};
 
-    public State playerState;
+    public PState playerState;
+    public GState gameState;
+    public EState enemyState;
     // Start is called before the first frame update
     void Start()
     {
-        playerState = State.CheckArrow;
+        playerState = PState.CheckArrow;
+        gameState = GState.PlayerTurn;
+        enemyState = EState.Attack;
     }
 
     // Update is called once per frame
@@ -19,15 +25,29 @@ public class GameManager : MonoBehaviour
        
     }
 
-    public void GetNextState()
+    public void GetNextPlayerState()
     {
-        if (playerState != State.Wait)
+        if (playerState != PState.Wait)
         {
             playerState += 1;
         }
         else
         {
-            playerState = State.CheckArrow;
+            playerState = PState.CheckArrow;
+            gameState = GState.EnemyTurn;
+        }
+    }
+
+    public void GetNextEnemyState()
+    {
+        if (enemyState != EState.Wait)
+        {
+            enemyState += 1;
+        }
+        else
+        {
+            enemyState = EState.Attack;
+            gameState = GState.PlayerTurn;
         }
     }
 }

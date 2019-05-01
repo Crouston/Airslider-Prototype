@@ -29,7 +29,7 @@ public class PowerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.playerState == GameManager.State.CheckPower)
+        if (gameManager.playerState == GameManager.PState.CheckPower)
         {
             MoveArrow();
         }

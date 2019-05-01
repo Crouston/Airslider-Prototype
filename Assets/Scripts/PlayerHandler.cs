@@ -14,7 +14,7 @@ public class PlayerHandler : MonoBehaviour
     private float angleChosen;
     private float powerChosen;
     [SerializeField]
-    private int hp;
+    private int hp,damage;
     private int speed;
     // Start is called before the first frame update
     void Start()
@@ -31,30 +31,34 @@ public class PlayerHandler : MonoBehaviour
     void Update()
     {
         healthBar.value = hp;
-        if(gameManager.playerState == GameManager.State.CheckArrow && Input.GetKeyDown(KeyCode.Space))
+        if (gameManager.gameState == GameManager.GState.PlayerTurn)
         {
-            angleChosen = playerDir.dirAngle;
-            FindObjectOfType<GameManager>().GetNextState();
-            Debug.Log(angleChosen);
-        }
-        else if (gameManager.playerState == GameManager.State.CheckPower && Input.GetKeyDown(KeyCode.Space))
-        {
-            powerChosen = playerPower.powerThreshold;
-            FindObjectOfType<GameManager>().GetNextState();
-        }
-        else if (gameManager.playerState == GameManager.State.Play)
-        {
-            Vector2 dir = new Vector2(-Mathf.Cos(Mathf.Deg2Rad * angleChosen), Mathf.Sin(Mathf.Deg2Rad * angleChosen));
-            GetComponent<Rigidbody2D>().AddForce( dir  * powerChosen );
-            FindObjectOfType<GameManager>().GetNextState();
-        }
-        else if(gameManager.playerState == GameManager.State.Wait)
-        {
-            if(GetComponent<Rigidbody2D>().velocity.x == 0 && GetComponent<Rigidbody2D>().velocity.y == 0)
+            if (gameManager.playerState == GameManager.PState.CheckArrow && Input.GetKeyDown(KeyCode.Space))
             {
-                FindObjectOfType<GameManager>().GetNextState();
+                angleChosen = playerDir.dirAngle;
+                FindObjectOfType<GameManager>().GetNextPlayerState();
+                Debug.Log(angleChosen);
+            }
+            else if (gameManager.playerState == GameManager.PState.CheckPower && Input.GetKeyDown(KeyCode.Space))
+            {
+                powerChosen = playerPower.powerThreshold;
+                FindObjectOfType<GameManager>().GetNextPlayerState();
+            }
+            else if (gameManager.playerState == GameManager.PState.Play)
+            {
+                Vector2 dir = new Vector2(-Mathf.Cos(Mathf.Deg2Rad * angleChosen), Mathf.Sin(Mathf.Deg2Rad * angleChosen));
+                GetComponent<Rigidbody2D>().AddForce(dir * powerChosen);
+                FindObjectOfType<GameManager>().GetNextPlayerState();
+            }
+            else if (gameManager.playerState == GameManager.PState.Wait)
+            {
+                if (GetComponent<Rigidbody2D>().velocity.x == 0 && GetComponent<Rigidbody2D>().velocity.y == 0)
+                {
+                    FindObjectOfType<GameManager>().GetNextPlayerState();
+                }
             }
         }
+        Death();
     }
 
     public void TakeDamage(int Damage)
@@ -75,4 +79,20 @@ public class PlayerHandler : MonoBehaviour
     //    }
     //    return angle / 90;
     //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy") && gameManager.gameState == GameManager.GState.PlayerTurn)
+        {
+            collision.gameObject.GetComponent<EnemyHandler>().TakeDamage(damage);
+        }
+    }
+
+    private void Death()
+    {
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

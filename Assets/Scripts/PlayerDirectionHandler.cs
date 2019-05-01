@@ -28,7 +28,7 @@ public class PlayerDirectionHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.playerState == GameManager.State.CheckArrow)
+        if (gameManager.playerState == GameManager.PState.CheckArrow)
         {
             MoveArrow();
         }
