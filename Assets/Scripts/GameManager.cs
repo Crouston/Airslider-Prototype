@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
         {
             enemyState = EState.Attack;
             gameState = GState.PlayerTurn;
+
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            transform.position = new Vector3(player.position.x, player.position.y, -10);
         }
     }
 }
