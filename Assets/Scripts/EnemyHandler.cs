@@ -20,7 +20,7 @@ public class EnemyHandler : MonoBehaviour
         {
             if(gameManager.enemyState == GameManager.EState.Attack)
             {
-                GetComponent<Rigidbody2D>().AddForce(GameObject.FindGameObjectWithTag("Player").transform.position*speed);
+                GetComponent<Rigidbody2D>().AddForce((GameObject.FindGameObjectWithTag("Player").transform.position-transform.position)*speed);
                 gameManager.GetNextEnemyState();
             }
             else if(gameManager.enemyState == GameManager.EState.Wait)
