@@ -220,6 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
+  gameState: 0
+  enemyState: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1200,6 +1202,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8506170123293583692, guid: e9704643f884c1d48bbec42e182d8eda,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 8506170123293583694, guid: e9704643f884c1d48bbec42e182d8eda,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1259,6 +1266,21 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775452689213316767, guid: e9704643f884c1d48bbec42e182d8eda,
+        type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775452689213316767, guid: e9704643f884c1d48bbec42e182d8eda,
+        type: 3}
+      propertyPath: hp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810317753462690067, guid: e9704643f884c1d48bbec42e182d8eda,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9704643f884c1d48bbec42e182d8eda, type: 3}
